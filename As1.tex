@@ -1,19 +1,27 @@
 \documentclass{article}
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath}
+\usepackage{geometry}
 % \usepackage{indentfirst}
 \title{BIM3008-Assignment1}
 \author{Junyang Deng (120090791)}
 \date{\today}
-% \setlength{\parindent}{2em}
+\geometry{left=3cm,right=3cm,top=1cm,bottom=1cm}
+\setlength{\parindent}{0cm}
 \begin{document} 
-
 \maketitle
-
 \section*{Question 1}
 Please conduct a literature survey on the experimental principles and the performance of the Nucleic Acids Test or Antigen Test for COVID-19 SARS-CoV-2 infections. Briefly describe the principles and the predictive model performance using some measures, including precision, sensitivity, and specificity.
 \subsubsection*{Answer}
-The principle of Nucleic Acids Test: The test is based on a real-time fluorescent PCR platform. With RNA transcription, polymerase chain reaction and TaqMan probe technology to target the highly conserved regions of the ORF1ab gene and N gene of SARS-CoV-2.
+The principle of Nucleic Acids Test: The test is based on a real-time fluorescent PCR platform. With RNA transcription, polymerase chain reaction and TaqMan probe technology to target the highly conserved regions of the ORF1ab gene and N gene of SARS-CoV-2. 
+
+According to Jarrom et al. (2022), the sensitivity of a reverse-transcriptase PCR test is estimated to be 87.8\%.  The specificity ranges from 95\% to 100\%. However, the sensitivity is subject to the way of collecting samples.
+
+Reference:
+\begin{itemize}
+    \item Jarrom D, Elston L, Washington J, et al. (2022). Effectiveness of tests to detect the presence of SARS-CoV-2 virus, and antibodies to SARS-CoV-2, to inform COVID-19 diagnosis: a rapid systematic review. BMJ Evidence-Based Medicine 2022;27:33-45.
+\end{itemize}
+
 
 % References:
 % https://ebm.bmj.com/content/27/1/33
@@ -26,7 +34,8 @@ The principle of Nucleic Acids Test: The test is based on a real-time fluorescen
 Let us say we are given the task of building an automated taxi. Define the constraints. What are the inputs? What is the output? How can we communicate with the passenger? Do we need to communicate with the other automated taxis, that is, do we need a “language”? (Question 4 of Chapter One \#41)
 \subsubsection*{Answer}
 
-Constraints are: \\(1) taxis should run on roads,\\ 
+Constraints are: \\
+(1) taxis should run on roads,\\ 
 (2) taxis should not hit other cars, \\
 (3) taxis should obey the traffic rules (i.e. stop when traffic lights turn red), \\
 (4) taxis should not hit pedestrians.\\
@@ -94,5 +103,21 @@ We reject when $$1-\frac{\lambda_1}{8}<P(C_1|x)<\frac{\lambda_1}{4}$$
 
 \section*{Question 5}
 Provide three examples of machine learning applications to biological or biomedical data sets. Citations and brief descriptions of the references are required in the report. 
+
+\subsubsection*{Answer}
+Machine learning has been widely used in biological studies for prediction and discovery.
+
+\begin{enumerate}
+    \item Machine learning can be used to predict DNA accessibility based on DNA sequence data and histone modification information. For example, Kelly et al. (2016) build an open-source package Basset to apply CNNs to learn the functional activity of DNA sequences from genomics data. 
+    \item Machine learning can be used to predict urinary stones in CT scans. For example, Babajide et al. (2022) construct a neural network for the identification and measurement of urinary stones on NCCT images. The model reaches 100\% specificity and 100\% sensitivity.
+    \item Machine learning approaches have also been used to predict breast cancer therapy response. Sammut et al. (2021) collected clinical, digital pathology, genomic and transcriptomic profiles of pre-treatment biopsies of breast tumours from 168 patients treated with chemotherapy with or without HER2 (encoded by ERBB2)-targeted therapy before surgery. Based on these data, their model has excellent performance with AUC equals 0.87.
+\end{enumerate}
+
+References:
+\begin{itemize}
+    \item Kelley, D. R., Snoek, J., \& Rinn, J. L. (2016). Basset: learning the regulatory code of the accessible genome with deep convolutional neural networks. Genome research, 26(7), 990–999. https://doi.org/10.1101/gr.2005\\35.115
+    \item Babajide, R., Lembrikova, K., Ziemba, J., Ding, J., Li, Y., Fermin, A. S., ... \& Tasian, G. E. (2022). Automated Machine Learning Segmentation and Measurement of Urinary Stones on CT Scan. Urology.
+    \item Sammut, SJ., Crispin-Ortuzar, M., Chin, SF. et al.  (2022). Multi-omic machine learning predictor of breast cancer therapy response. Nature 601, 623–629. https://doi.org/10.1038/s41586-021-04278-5
+\end{itemize}
 
 \end{document}
