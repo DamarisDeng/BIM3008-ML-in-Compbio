@@ -6,7 +6,7 @@
 \title{BIM3008-Assignment1}
 \author{Junyang Deng (120090791)}
 \date{\today}
-\geometry{left=3cm,right=3cm,top=1cm,bottom=1cm}
+\geometry{left=3cm,right=3cm,top=2cm,bottom=2cm}
 \setlength{\parindent}{0cm}
 \begin{document} 
 \maketitle
@@ -34,17 +34,22 @@ Reference:
 Let us say we are given the task of building an automated taxi. Define the constraints. What are the inputs? What is the output? How can we communicate with the passenger? Do we need to communicate with the other automated taxis, that is, do we need a “language”? (Question 4 of Chapter One \#41)
 \subsubsection*{Answer}
 
-Constraints are: \\
-(1) taxis should run on roads,\\ 
-(2) taxis should not hit other cars, \\
-(3) taxis should obey the traffic rules (i.e. stop when traffic lights turn red), \\
-(4) taxis should not hit pedestrians.\\
+Constraints are: 
+\begin{enumerate}
+    \item taxis should run on roads,
+    \item taxis should not hit other cars and pedestrians,
+    \item taxis should obey the traffic rules (i.e. stop when traffic lights turn red).
+\end{enumerate}
 
-\noindent Inputs are: \\(1) the traffic conditions of nearby region, \\(2) the location of surrounding objects, like pedestrians, cars, signs.\\
+\noindent Inputs are: 
+\begin{enumerate}
+    \item the traffic conditions of nearby region,
+    \item the location of surrounding objects, like pedestrians, cars, signs.
+\end{enumerate}
 
 \noindent Outputs are: Direction and speed of taxis.\\
 
-\noindent Ways to communicate with the passanger: figures, video and audio.
+\noindent Ways to communicate with the passanger: buttons, video and audio etc.
 
 \section*{Question 3}
 \subsection*{Problem 6 of Chapter 3}
@@ -78,7 +83,7 @@ Show example transaction data where for the rule X → Y:\\
 
 \section*{Question 4}
 In a two-class, two-action problem, if the lost function is $\lambda_{11}=\lambda_{22}=0$, $\lambda_{12}=8$, and $\lambda_{21}=4$, write 
-the optimal decision rule. How does the rule change if we add a third action of reject with $\lambda_1$?
+the optimal decision rule. How does the rule change if we add a third action of reject with $\lambda = 1$?
 \subsubsection*{Answer}
 In order to reach the optimal decision rule, we first calculate the expected risks of two actions.
 \begin{align*}
@@ -95,11 +100,27 @@ R(\alpha_1|x) &=\lambda_{11}\cdot P(C_1|x) +  \lambda_{12}\cdot P(C_2|x)\\
 
 \noindent In this case, we choose $\alpha_1$ if $$R(\alpha_1|x) < R(\alpha_2|x) \Rightarrow P(C_1|x)>2/3$$
 Choose $\alpha_2$ if $$R(\alpha_1|x) > R(\alpha_2|x) \Rightarrow P(C_1|x)<2/3$$
+In conclusion,
+$$
+\begin{cases}
+    P(C_1|x)>2/3& \text{choose}\:\alpha_1\\
+    P(C_1|x)<2/3& \text{choose}\:\alpha_2
+\end{cases}
+$$
 
-
-\noindent If we add a third action of reject with $\lambda_1$, we choose $\alpha_1$ if $$R(\alpha_1) < \lambda_1 \Rightarrow P(C_1|x)>1-\frac{\lambda_1}{8}$$
-we choose $\alpha_2$ if $$R(\alpha_2) < \lambda_1 \Rightarrow P(C_1|x)<\frac{\lambda_1}{4}$$
-We reject when $$1-\frac{\lambda_1}{8}<P(C_1|x)<\frac{\lambda_1}{4}$$
+\noindent When a third action of reject with $\lambda = 1$ is added, we choose $\alpha_1$ if 
+$$R(\alpha_1) < \lambda \Rightarrow P(C_1|x)>1-\frac{\lambda}{8}$$
+$$P(C_1|x)>\frac{7}{8}$$
+we choose $\alpha_2$ if $$R(\alpha_2) < \lambda \Rightarrow P(C_1|x)<\frac{\lambda}{4}$$
+$$P(C_1|x)<\frac{1}{4}$$
+In conclusion, with $\lambda=1$, 
+$$
+\begin{cases}
+    P(C_1|x)>\frac{7}{8},& \text{choose}\:\alpha_1\\
+    \frac{1}{4} < P(C_1|x) < \frac{7}{8},& \text{reject}\\
+    P(C_1|x)<\frac{1}{4},& \text{choose}\:\alpha_2
+\end{cases}
+$$
 
 \section*{Question 5}
 Provide three examples of machine learning applications to biological or biomedical data sets. Citations and brief descriptions of the references are required in the report. 
