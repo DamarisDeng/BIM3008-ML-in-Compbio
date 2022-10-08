@@ -2,7 +2,8 @@
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath}
 \usepackage{geometry}
-% \usepackage{indentfirst}
+\usepackage{parskip}
+\setlength{\parskip}{0.5em}
 \title{BIM3008-Assignment1}
 \author{Junyang Deng (120090791)}
 \date{\today}
@@ -13,9 +14,9 @@
 \section*{Question 1}
 Please conduct a literature survey on the experimental principles and the performance of the Nucleic Acids Test or Antigen Test for COVID-19 SARS-CoV-2 infections. Briefly describe the principles and the predictive model performance using some measures, including precision, sensitivity, and specificity.
 \subsubsection*{Answer}
-The principle of Nucleic Acids Test: The test is based on a real-time fluorescent PCR platform. With RNA transcription, polymerase chain reaction and TaqMan probe technology to target the highly conserved regions of the ORF1ab gene and N gene of SARS-CoV-2. 
+The principle of Nucleic Acids Test: The test is based on a real-time fluorescent PCR platform. With RNA transcription, polymerase chain reaction and TaqMan probe technology to target the highly conserved regions of the ORF1ab gene and N gene of SARS-CoV-2. When both genes can be detected in the sample with cycle threshold (Ct) value $\geq 35$, the sample will be labeled positive.
 
-According to Jarrom et al. (2022), the sensitivity of a reverse-transcriptase PCR test is estimated to be 87.8\%.  The specificity ranges from 95\% to 100\%. However, the sensitivity is subject to the way of collecting samples.
+According to Jarrom et al. (2022), the sensitivity of a reverse-transcriptase PCR test is estimated to be 87.8\%.  The specificity ranges from 95\% to 100\%. However, the sensitivity is subject to the way of collecting samples, for example, oropharyngeal swab is less reliable than nasal swab.
 
 Reference:
 \begin{itemize}
@@ -116,9 +117,9 @@ $$P(C_1|x)<\frac{1}{4}$$
 In conclusion, with $\lambda=1$, 
 $$
 \begin{cases}
-    P(C_1|x)>\frac{7}{8},& \text{choose}\:\alpha_1\\
+    P(C_1|x)<\frac{1}{4},& \text{choose}\:\alpha_2\\
     \frac{1}{4} < P(C_1|x) < \frac{7}{8},& \text{reject}\\
-    P(C_1|x)<\frac{1}{4},& \text{choose}\:\alpha_2
+    P(C_1|x)>\frac{7}{8},& \text{choose}\:\alpha_1
 \end{cases}
 $$
 
@@ -129,7 +130,7 @@ Provide three examples of machine learning applications to biological or biomedi
 Machine learning has been widely used in biological studies for prediction and discovery.
 
 \begin{enumerate}
-    \item Machine learning can be used to predict DNA accessibility based on DNA sequence data and histone modification information. For example, Kelly et al. (2016) build an open-source package Basset to apply CNNs to learn the functional activity of DNA sequences from genomics data. 
+    \item Machine learning can be used to predict DNA accessibility based on DNA sequence data and histone modification information. For example, Kelly et al. (2016) build an open-source package Basset which applies CNNs to learn the functional activity of DNA sequences from genomics data. 
     \item Machine learning can be used to predict urinary stones in CT scans. For example, Babajide et al. (2022) construct a neural network for the identification and measurement of urinary stones on NCCT images. The model reaches 100\% specificity and 100\% sensitivity.
     \item Machine learning approaches have also been used to predict breast cancer therapy response. Sammut et al. (2021) collected clinical, digital pathology, genomic and transcriptomic profiles of pre-treatment biopsies of breast tumours from 168 patients treated with chemotherapy with or without HER2 (encoded by ERBB2)-targeted therapy before surgery. Based on these data, their model has excellent performance with AUC equals 0.87.
 \end{enumerate}
