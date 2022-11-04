@@ -1,0 +1,74 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{geometry}
+\usepackage{listings}
+\usepackage[T1]{fontenc}
+\usepackage{fourier}
+\title{BIM3008-Assignment2}
+\author{Junyang Deng (120090791)}
+\date{\today}
+\geometry{left=3cm,right=3cm,top=2cm,bottom=2cm}
+\setlength{\parindent}{0cm}
+
+\begin{document} 
+\maketitle
+
+\begin{enumerate}
+    \item Write the log likelihood for a multinomial sample and show equation (4.6). % Chapter FOUR (Ex2)
+    $$
+    \hat{p}_i=\frac{\sum_t x_i^t}{N}
+    $$
+    \textbf{Answer:} \\
+    In a multinomial sample, the outcome of a random event is one of K mutually exclusive and exhaustive states, each of which has a probability of occuring $p_i$ with $\sum^K_{i=1}p_i$. Let $x_1, x_2,...,x_K$ be indicators where $x_i=1$ if the outcome is state $i$ and 0 otherwise.\\
+    In one experiment, 
+    $$
+    P\left(x_1, x_2, \ldots, x_K\right)=\prod_{i=1}^K p_i^{x_i}
+    $$
+    We do $N$ such independent experiments with outcomes $\mathcal{X}=$ $\left\{\boldsymbol{x}^t\right\}_{t=1}^N$ where $\sum_i x_i^t=1$ and
+    $$
+    x_i^t= \begin{cases}1 & \text { if experiment } t \text { chooses state } i \\ 0 & \text { otherwise }\end{cases}$$
+    The constraint is $\sum_i p_i=1$.
+
+    We add the constraint as a Lagrange term and maximize the formula below.
+    $$
+    \begin{aligned}
+    J\left(p_i\right) &=\sum_i \sum_t x_i^t \log p_i+\lambda\left(1-\sum_i p_i\right) \\
+    \frac{\partial J(p_i)}{p_i} &=\sum_t\frac{x_i^t}{p_i}-\lambda=0 \\
+    \lambda &=\sum_t\frac{x_i^t}{p_i} \Rightarrow p_i \lambda=\sum_t x_i^t \\
+    \sum_i p_i \lambda &=\sum_i \sum_t x_i^t \Rightarrow \lambda=\sum_t \sum_i x_i^t \\
+    p_i &=\frac{\sum_t x_i^t}{\sum_t \sum_i x_i^t}=\frac{\sum_t x_i^t}{N}, \text{ since} \sum_i x_i^t=1
+    \end{aligned}
+    $$
+
+
+    \item Write the code that generates a normal sample with given $\mu$ and $\sigma$, and the code that calculates $m$ and $s$ from the sample. Do the same using the Bayes’ estimator assuming a prior distribution for $\mu$. % Ch 4 Ex 3
+    
+    \textbf{Answer:} \\
+        
+
+    \item  Assume a linear model and then add $0$-mean Gaussian noise to generate a sample. Divide your sample into two as training and validation sets. Use linear regression using the training half. Compute error on the validation set. Do the same for polynomials of degrees 2 and 3 as well. % Ch4 Ex 7
+    
+    \textbf{Answer:} \\
+
+    \item  When the training set is small, the contribution of variance to error may be more than that of bias and in such a case, we may prefer a simple model even though we know that it is too simple for the task. Can you give an example? % Ch4 Ex 8
+    
+    \textbf{Answer:} \\
+
+    \item Generate a sample from a multivariate normal density $N(\mu, \Sigma)$, calculate $m$ and $S$, and compare them with $\mu$ and $\Sigma$. Check how your estimates change as the sample size changes. % Ch5 Ex 2
+    
+    \textbf{Answer:} \\
+
+    \item  Generate samples from two multivariate normal densities$ N(\mu_i, \Sigma_i)$, i = 1, 2, and calculate the Bayes’ optimal discriminant for the four cases in table 5.1. % Ch5 Ex3
+    
+    \textbf{Answer:} \\
+
+    \item  In figure 6.11, we see a synthetic two-dimensional data where LDA does a better job than PCA. Draw a similar dataset where PCA and LDA find the same good direction. Draw another where neither PCA nor LDA find a good direction. % Ch6 Ex5
+    
+    \textbf{Answer:} \\
+
+
+\end{enumerate}
+
+
+\end{document}
