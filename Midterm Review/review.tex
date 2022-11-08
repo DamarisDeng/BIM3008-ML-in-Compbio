@@ -1,0 +1,161 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{geometry}
+\usepackage{listings}
+\usepackage[T1]{fontenc}
+\usepackage{fourier}
+\title{Midterm Review}
+\author{Junyang Deng}
+\date{\today}
+\geometry{left=3cm,right=3cm,top=2cm,bottom=2cm}
+\setlength{\parindent}{0cm}
+\linespread{1.3}
+\begin{document} 
+\maketitle
+
+\begin{enumerate}
+    \item What is the likelihood ratio $p\left(x \mid C_1\right) / p\left(x \mid C_2\right)$ in the case of Gaussian densities? (Selected from Chapter Four, exercise 5)\\
+    \textbf{SOLUTION}\\
+    The likelihood ratio is
+$$
+\dfrac{p\left(x \mid C_1\right)}{p\left(x \mid C_2\right)}=\dfrac{\dfrac{1}{\sqrt{2 \pi} \sigma_1} \exp \left[-\dfrac{\left(x-\mu_1\right)^2}{2 \sigma_1^2}\right]}{\dfrac{1}{\sqrt{2 \pi} \sigma_2} \exp \left[-\dfrac{\left(x-\mu_2\right)^2}{2 \sigma_2^2}\right]}
+$$
+If we have $\sigma_1^2=\sigma_2^2=\sigma^2$, we have
+$$
+\begin{aligned}
+\dfrac{p\left(x \mid C_1\right)}{p\left(x \mid C_2\right)} &=\exp \left[-\dfrac{\left(x-\mu_1\right)^2}{2 \sigma^2}+\dfrac{\left(x-\mu_2\right)^2}{2 \sigma^2}\right] \\
+&=\exp \left[\dfrac{\left(\mu_1-\mu_2\right)}{\sigma^2} x+\dfrac{\mu_2^2-\mu_1^2}{2 \sigma^2}\right] \\
+&=\exp \left(w x+w_0\right)
+\end{aligned}
+$$
+
+    \item Let us say we have two variables $x_1$ and $x_2$ and we want to make a quadratic fit using them,
+    namely $f\left(x_1, x_2\right)=w_0+w_1 x_1+w_2 x_2+w_3 x_1 x_2+w_4\left(x_1\right)^2+w_5\left(x_2\right)^2$. How can we find $w_i, i=0, \ldots, 5$, given a sample of $X=\left\{x_1^t, x_2^t, r^t\right\}$ ? (Selected from Chapter Five, exercise 7)\\
+\textbf{SOLUTION}\\
+We write the fit as
+$$
+f\left(x_1, x_2\right)=w_0+w_1 z_1+w_2 z_2+w_3 z_3+w_4 z_4+w_5 z_5
+$$
+where $z_1=x_1, z_2=x_2, z_3=x_1 x_2, z_4=\left(x_1\right)^2$, and $z_5=\left(x_2\right)^2$. We can then use linear regression to learn $w_i, i=0, \ldots, 5$. The linear fit in the five-dimensional $\left(z_1, z_2, z_3, z_4, z_5\right)$ space corresponds to a quadratic fit in the two-dimensional $\left(x_1, x_2\right)$ space. 
+    \item Describe Principal Component Analysis (PCA) and Linear Discriminant Analysis (LDA), and compare the differences.\\
+    \textbf{SOLUTION}
+    \begin{itemize}
+        \item \textbf{PCA}: The principle of PCA is to find a mapping $W$ from the inputs $x$ with $d$-dimension to a new $k$-dimesional space. The projection on the direction $w$ is then $z=W^Tx$. The criterion to select $W$ is to maximize the variance of the projected data. \\
+        In order to do this, we need to first (1) compute the covariance matrix of $x$ by $\Sigma = E\left[(x-\mu)(x-\mu)^T\right]$.\\
+        Then, we can (2) compute eigenvalues and eigenvectors of $\Sigma$ and (3) rank eigenvalues from largest to smallest. Eigenvectors that correspond to highest eigenvalues will be (4) selected as principal components.\\
+        In this way, we found directions that maximize the variance among data.
+
+        \item \textbf{LDA}: The principle of LDA is to find a direction $w$ which separates different classes as much as possible. Criteria of selecting $w$ is to maximize between-class variance and minimize within-class variance.\\
+        In order to this, we should (1) construct the within-class ($\mathbf{S}_W$) and between-class ($\mathbf{S}_B$) scatter matrix by $\mathbf{S}_W=\sum_{i=1}^K \boldsymbol{S}_i,~\mathbf{S}_i=\sum_t r_i^t\left(\boldsymbol{x}^t-\boldsymbol{m}_i\right)\left(\boldsymbol{x}^t-\boldsymbol{m}_i\right)^T$ and $\mathbf{S}_B=\sum_{i=1}^K N_i\left(\boldsymbol{m}_i-\boldsymbol{m}\right)\left(\boldsymbol{m}_i-\boldsymbol{m}\right)^T$.\\
+        (2) Then, compute the eigenvectors and eigenvalues of $\mathbf{S}_W^{-1} \mathbf{S}_B$. The largest eigenvectors are the direction we need. In the two-class case, the solution is $c\boldsymbol{S}_W^{-1}(\boldsymbol{m}_1-\boldsymbol{m}_2)$.
+
+        \item \textbf{Differences}
+        \begin{enumerate}
+            \item LDA is a supervised learning method, which means labels should also be included in the input, while PCA is an unsupervised learning method.
+            \item For LDA, since it has label information, it can minimize the within-class variance as well as maximize the between class variance. For PCA, it can only maximize the overall variance.
+        \end{enumerate}
+    \end{itemize}
+    \item To evaluate the predictive performance of a model constructed from a two-class data set, k-fold cross-validations are frequently applied. Describe the concept of cross-validation, and two performance measures, sensitivity, and specificity, respectively.\\
+    \textbf{SOLUTION}
+    \begin{itemize}
+        \item \textbf{Cross-validation}: Also named k-fold cross-validation. People will randomly partition the data into $k$ mutually exclusive subsets, each of them has approximately equal size. At $i$-th iteration, class $D_i$ will be used as validation set, while the rest will be used as training set. After each iteration, performance (or error) of the model will be calculated. 
+        \item \textbf{Sensitivity}: Sensitivity is the true positive recognition rate. It can be calculated as $TP/(TP+FN)$.
+        \item \textbf{Specificity}: Specificity is the true negative recognition rate. It can be calculated as $TN/(TN+FP)$.
+    \end{itemize}
+    \item To learn predictive models from a data set, which is a sample from real-world data. Describe the relationship between prediction errors, bias, and variance.\\
+    \textbf{SOLUTION}\\
+    We usually use Mean Square Error (MSE) to describe prediction error. Denote the estimated parameter as $d$, the expectation of estimated parameter as $Ed$, and the underlying unknown parameter as $\theta$.
+    $$
+    \begin{aligned}
+        \text{MSE}&=E\left[(d-\theta)^2\right]\\
+        &= E\left[(d-Ed+Ed-\theta)^2\right]\\
+        &= E\left[(d-Ed)^2 + 2(d-Ed)(Ed-\theta)+(Ed-\theta)^2\right]\\
+        &= E(d-Ed)^2 + (Ed-\theta)^2
+    \end{aligned}
+    $$
+    $E(d-Ed)^2$ is variance and $(Ed-\theta)^2$ is $\text{bias}^2$. Therefore, preidction errors (or MSE) can be decompose into squared bias and variance.
+    \item What is the assumption of a multi-variate and supervised data set to which naive Bayesian classifier can be applied? Address your points in the aspect of variable dependency, co-variance matrix, and data distributions of the given classes.\\
+    \textbf{SOLUTION}\\
+    The assumption is 
+    \item In a two-class problem, the likelihood ratio is $p\left(x \mid C_1\right)/p\left(x \mid C_2\right)$. Write the discriminant function in terms of the likelihood ratio. (Selected from Chapter Three, exercise 2)\\
+    \textbf{SOLUTION}\\
+We define a discriminant function as
+$$
+g(x)=\log \frac{P\left(C_1 \mid x\right)}{P\left(C_2 \mid x\right)} \text { and choose } \begin{cases}C_1 & \text { if } g(x)>0 \\ C_2 & \text { otherwise }\end{cases}
+$$
+Log odds is the sum of log likelihood ratio and log of prior ratio:
+$$
+g(x)=\log \frac{p\left(x \mid C_1\right)}{p\left(x \mid C_2\right)}+\log \frac{P\left(C_1\right)}{P\left(C_2\right)}
+$$
+If the priors are equal, the discriminant is the log likelihood ratio.
+    \item In a two-class, two-action problem, if the lost function is $\lambda_{11}=\lambda_{22}=0, \lambda_{12}=10$, and $\lambda_{21}=5$, write the optimal decision rule. How does the rule change if we add a third action of reject with $\lambda_1=1 ?$ (Selected from Chapter Three, exercise 4)\\
+    \textbf{SOLUTION}\\
+We calculate the expected risks of the two actions:
+$$
+\begin{aligned}
+&R\left(\alpha_1 \mid x\right)=\lambda_{11} P\left(C_1 \mid x\right)+\lambda_{12} P\left(C_2 \mid x\right)=10 P\left(C_2 \mid x\right) \\
+&R\left(\alpha_2 \mid x\right)=\lambda_{21} P\left(C_1 \mid x\right)+\lambda_{22} P\left(C_2 \mid x\right)=5P\left(C_1 \mid x\right)
+\end{aligned}
+$$
+When reject is not considered, we choose $C_1$ if 
+$$
+R\left(\alpha_1 \mid x\right)<R\left(\alpha_2 \mid x\right) \Rightarrow 10-10P\left(C_1|x\right)>5P\left(C_1|x\right)
+$$
+Solve the inequality, we get $P(C_1|x)>2/3$. Therefore,  when $P(C_1|x)>2/3$, choose $C_1$, when $P(C_1|x)<2/3$, choose $C_2$.
+
+When reject is considered, we choose $C_1$ when
+$$
+R(\alpha_1|x)<R(\alpha_2|x) \text{ and } R(\alpha_1|x)<\lambda
+$$
+Solve that $P(C_1|x)>9/10$.\\
+In summary, 
+$$
+\text{We choose} \begin{cases}C_1 & P(C_1|x)>9/10\\ \text{reject} & 2/3<P(C_1|x)<9/10 \\ C_2 & P(C_1|x) < 2/3 \\
+\end{cases}
+$$
+    \item Show equation $5.11$ (Selected from Chapter Five, exercise 1)
+    $$
+    p\left(x_1, x_2\right)=\frac{1}{2 \pi \sigma_1 \sigma_2 \sqrt{1-\rho^2}} \exp \left[-\frac{1}{2\left(1-\rho^2\right)}\left(z_1^2-2 \rho z_1 z_2+z_2^2\right)\right]
+    $$
+    \textbf{SOLUTION}\\
+    Given that
+$$
+\boldsymbol{\Sigma}=\left[\begin{array}{cc}
+\sigma_1^2 & \rho \sigma_1 \sigma_2 \\
+\rho \sigma_1 \sigma_2 & \sigma_2^2
+\end{array}\right]
+$$
+we have
+$$
+\begin{aligned}
+|\Sigma| &=\sigma_1^2 \sigma_2^2-\rho^2 \sigma_1^2 \sigma_2=\sigma_1^2 \sigma_2\left(1-\rho^2\right) \\
+|\Sigma|^{1 / 2} &=\sigma_1 \sigma_2 \sqrt{1-\rho^2} \\
+\Sigma^{-1} &=\dfrac{1}{\sigma_1^2 \sigma_2\left(1-\rho^2\right)}\left[\begin{array}{cc}
+\sigma_2^2 & -\rho \sigma_1 \sigma_2 \\
+-\rho \sigma_1 \sigma_2 & \sigma_1^2
+\end{array}\right]
+\end{aligned}
+$$
+and $(\boldsymbol{x}-\boldsymbol{\mu})^T \boldsymbol{\Sigma}^{-1}(\boldsymbol{x}-\boldsymbol{\mu})$ can be expanded as
+$$
+\begin{array}{r}
+{\left[x_1-\mu_1 ~~ x_2-\mu_2\right]\left[\begin{array}{cc}
+\dfrac{\sigma_2^2}{\sigma_1^2 \sigma_2\left(1-\rho^2\right)} & -\dfrac{\rho \sigma_1 \sigma_2}{\sigma_1^2 \sigma_2\left(1-\rho^2\right)} \\
+-\dfrac{\rho \sigma_1 \sigma_2}{\sigma_1^2 \sigma_2\left(1-\rho^2\right)} & \dfrac{\sigma_1^2}{\sigma_1^2 \sigma_2\left(1-\rho^2\right)}
+\end{array}\right]\left[\begin{array}{c}
+x_1-\mu_1 \\
+x_2-\mu_2
+\end{array}\right]} \\
+=\dfrac{1}{1-\rho^2}\left[\left(\dfrac{x_1-\mu_1}{\sigma_1}\right)^2-2 \rho\left(\dfrac{x_1-\mu_1}{\sigma_1}\right)\left(\dfrac{x_2-\mu_2}{\sigma_2}\right)+\left(\dfrac{x_2-\mu_2}{\sigma_2}\right)^2\right]
+\end{array}
+$$
+
+
+
+
+
+\end{enumerate}
+
+
+\end{document}
