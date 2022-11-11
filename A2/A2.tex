@@ -5,6 +5,7 @@
 \usepackage{listings}
 \usepackage[T1]{fontenc}
 \usepackage{fourier}
+\usepackage{graphicx}
 \title{BIM3008-Assignment2}
 \author{Junyang Deng (120090791)}
 \date{\today}
@@ -130,9 +131,21 @@
     
     \textbf{Answer:} \\
 
-    \item  In figure 6.11, we see a synthetic two-dimensional data where LDA does a better job than PCA. Draw a similar dataset where PCA and LDA find the same good direction. Draw another where neither PCA nor LDA find a good direction. % Ch6 Ex5
+    \item  In figure 6.11, we see a synthetic two-dimensional data where LDA does a better job than PCA. Draw a similar dataset where PCA and LDA find the same good direction. Draw another where neither PCA nor LDA find a good direction.\\ % Ch6 Ex5
+    \begin{center}
+        \includegraphics[width=0.8\linewidth]{figure 6-11.png}
+    \end{center}
     
     \textbf{Answer:} \\
+    This is the case where LDA and PCA find the same good direction.
+    \begin{center}
+        \includegraphics[width=0.6\linewidth]{q7-1.png}
+    \end{center}
+
+    Since PCA and LDA are both linear transformers. When the boundary of data is not linear, neither PCA nor LDA can find a good direction.
+    \begin{center}
+        \includegraphics[width=0.6\linewidth]{q7-2.png}
+    \end{center}
 
 
 \end{enumerate}
