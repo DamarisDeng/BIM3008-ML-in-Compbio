@@ -47,13 +47,15 @@ where $z_1=x_1, z_2=x_2, z_3=x_1 x_2, z_4=\left(x_1\right)^2$, and $z_5=\left(x_
         In this way, we found directions that maximize the variance among data.
 
         \item \textbf{LDA}: The principle of LDA is to find a direction $w$ which separates different classes as much as possible. Criteria of selecting $w$ is to maximize between-class variance and minimize within-class variance.\\
-        In order to this, we should (1) construct the within-class ($\mathbf{S}_W$) and between-class ($\mathbf{S}_B$) scatter matrix by $\mathbf{S}_W=\sum_{i=1}^K \boldsymbol{S}_i,~\mathbf{S}_i=\sum_t r_i^t\left(\boldsymbol{x}^t-\boldsymbol{m}_i\right)\left(\boldsymbol{x}^t-\boldsymbol{m}_i\right)^T$ and $\mathbf{S}_B=\sum_{i=1}^K N_i\left(\boldsymbol{m}_i-\boldsymbol{m}\right)\left(\boldsymbol{m}_i-\boldsymbol{m}\right)^T$.\\
-        (2) Then, compute the eigenvectors and eigenvalues of $\mathbf{S}_W^{-1} \mathbf{S}_B$. The largest eigenvectors are the direction we need. In the two-class case, the solution is $c\boldsymbol{S}_W^{-1}(\boldsymbol{m}_1-\boldsymbol{m}_2)$.
+        In order to this, we should (1) construct the within-class ($\mathbf{S}_W$) and between-class ($\mathbf{S}_B$) scatter matrix by $\mathbf{S}_W=\sum_{i=1}^K \boldsymbol{S}_i,~\mathbf{S}_i=\sum_t r_i^t\left(\boldsymbol{x}^t-\boldsymbol{m}_i\right)\left(\boldsymbol{x}^t-\boldsymbol{m}_i\right)^T$ and $\mathbf{S}_B=\sum_{i=1}^K N_i\left(\boldsymbol{m}_i-\boldsymbol{m}\right)\left(\boldsymbol{m}_i-\boldsymbol{m}\right)^T$. Based on $\mathbf{S}_W$ and $\mathbf{S}_B$, construct the Fisher's discriminant $J(W) = \dfrac{|W^T\mathbf{S}_BW|}{|W^T\mathbf{S}_WW|}$.\\
+        (2) Then, find a $W$ which maximizes the Fisher's discriminant. In the two-class case, the solution is $c\boldsymbol{S}_W^{-1}(\boldsymbol{m}_1-\boldsymbol{m}_2)$.
 
         \item \textbf{Differences}
         \begin{enumerate}
             \item LDA is a supervised learning method, which means labels should also be included in the input, while PCA is an unsupervised learning method.
             \item For LDA, since it has label information, it can minimize the within-class variance as well as maximize the between class variance. For PCA, it can only maximize the overall variance.
+            % \item PCA can decrease the dimensionality to any number according to the eigenvectors we select. LDA can only decrease the number of dimensionalities to number of ${class}-1$.
+            \item LDA has a better performance than PCA when there is more noise in the data. PCA is more sensitive to outliers.
         \end{enumerate}
     \end{itemize}
     \item To evaluate the predictive performance of a model constructed from a two-class data set, k-fold cross-validations are frequently applied. Describe the concept of cross-validation, and two performance measures, sensitivity, and specificity, respectively.\\
@@ -77,7 +79,13 @@ where $z_1=x_1, z_2=x_2, z_3=x_1 x_2, z_4=\left(x_1\right)^2$, and $z_5=\left(x_
     $E(d-Ed)^2$ is variance and $(Ed-\theta)^2$ is $\text{bias}^2$. Therefore, preidction errors (or MSE) can be decompose into squared bias and variance.
     \item What is the assumption of a multi-variate and supervised data set to which naive Bayesian classifier can be applied? Address your points in the aspect of variable dependency, co-variance matrix, and data distributions of the given classes.\\
     \textbf{SOLUTION}\\
-    The assumption is 
+    When variables can be assumed as independent, different given classes share a same covariance matrix which off-diagonal terms are zero, and each data point is independent, identical distributed, native Bayesian classifier can be applied.
+\begin{itemize}
+    \item Variable dependency: the naïve Bayesian classifier assume all variables are conditionally independent. They are no dependency between attributes.
+    \item Co-variance matrix: the naive Bayesian classifier assumes all off-diagonal terms are 0.
+    \item Distribution: the naïve Bayesian classifier requires an iid distribution and a Gaussian distribution is usually assumed.
+\end{itemize}
+
     \item In a two-class problem, the likelihood ratio is $p\left(x \mid C_1\right)/p\left(x \mid C_2\right)$. Write the discriminant function in terms of the likelihood ratio. (Selected from Chapter Three, exercise 2)\\
     \textbf{SOLUTION}\\
 We define a discriminant function as
@@ -129,9 +137,9 @@ $$
 we have
 $$
 \begin{aligned}
-|\Sigma| &=\sigma_1^2 \sigma_2^2-\rho^2 \sigma_1^2 \sigma_2=\sigma_1^2 \sigma_2\left(1-\rho^2\right) \\
+|\Sigma| &=\sigma_1^2 \sigma_2^2-\rho^2 \sigma_1^2 \sigma_2^2=\sigma_1^2 \sigma_2^2\left(1-\rho^2\right) \\
 |\Sigma|^{1 / 2} &=\sigma_1 \sigma_2 \sqrt{1-\rho^2} \\
-\Sigma^{-1} &=\dfrac{1}{\sigma_1^2 \sigma_2\left(1-\rho^2\right)}\left[\begin{array}{cc}
+\Sigma^{-1} &=\dfrac{1}{\sigma_1^2 \sigma_2^2\left(1-\rho^2\right)}\left[\begin{array}{cc}
 \sigma_2^2 & -\rho \sigma_1 \sigma_2 \\
 -\rho \sigma_1 \sigma_2 & \sigma_1^2
 \end{array}\right]
@@ -151,11 +159,31 @@ x_2-\mu_2
 \end{array}
 $$
 
+\item Compare EM and K-Means
+\begin{itemize}
+\item Commonalities
+    \begin{enumerate}
+        \item EM and K-means start by randomly assigning $K$ models. 
+        \item EM and K-means use a same 2-step iterative approach to optimize the objective function. They optimize $a$ while keeping $b$ unchanged, then optimize $b$ while keeping $a$ unchanged.
+        \item EM and K-means can only find the local minima or maxima for their target function. The results are sensitive to initiation.
+    \end{enumerate}
+\item Differences
+\begin{enumerate}
+    \item K-means is a simplified version of EM. K-means uses a distance-based approach to assign classes. EM uses a density-based (probalistic) approach.
+    \item K-means can use different distance metrics. EM implicitly relies on the Mahalanobis distance function which is part of its density estimation approach.
+    \item K-means minimizes the squared distance of a sample to its cluster prototype. EM maximizes the log likelihood of a sample given a model; models are assumed to be mixtures of $K$ Gaussian and their priors.
+    \item The model of K-means is $K$ centroid points. The model of EM is $K$ priors, means and covariance matrix (!!).
+    \item K-means is a hard clustering method. The result is \{0, 1\}. EM is a soft clustering method. The result is [0,1].
+    \item EM directly deals with dependencies between attributes in its density-based approach: the probability of a sample belongs to one class equals the product between class prior and the Mahalanobis distance between sample and mean. therefore, EM clusters do not depend on units of measurements and orientation of attributes in space.
+\end{enumerate}
+\end{itemize}
 
-
-
+\item How to choose $K$ in K-means clustering and EM?
+\begin{itemize}
+    \item Based on the application, e.g. image quantization
+    \item Use PCA to aid this process. We can first use PCA to project data to the direction with largest variance. Then count the data points and figure out how many peaks exist. The number of peaks can be the optimal $K$.
+    \item Plot the reconstruction error against K. Choose the elbow.
+\end{itemize}
 
 \end{enumerate}
-
-
 \end{document}
