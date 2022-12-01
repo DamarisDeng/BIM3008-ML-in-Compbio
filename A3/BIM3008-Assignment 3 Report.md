@@ -57,7 +57,15 @@ We can see clearly from these graphs that naive bayes classifier did a very bad 
 
 #### 3. KNN
 
+![knn-conf](images/KNN-conf.png)
 
+![knn-roc](images/KNN-roc.png)
+
+![knn-recall](images/KNN-recall.png)
+
+#### 4. Decision tree
+
+We used 
 
 ### Conclusion
 
